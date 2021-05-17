@@ -1,9 +1,11 @@
 # MyCalculator
-A basic calculator user interface with basic functions for basic people.
+A basic calculator user interface with basic functions for basic people. 
+
+Basically, basic.
 
 ## Core Concepts Used
 **1. Toast:**
-	A toast will be used to display communicate with the user in the event of an error.
+	A toast will be used to communicate with the user in the event of an error.
 	
 **2. Buttons and User Interface:**
 	Buttons will be required to properly allow for user interaction
