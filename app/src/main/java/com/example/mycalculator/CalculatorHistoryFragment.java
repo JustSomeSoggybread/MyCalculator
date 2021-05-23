@@ -33,7 +33,7 @@ public class CalculatorHistoryFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.calculation_history, container, false);
 
-        mCalcHisView = (RecyclerView) view.findViewById(R.id.calculation_history_view);
+        mCalcHisView = (RecyclerView) view.findViewById(R.id.calculation_recycler_view);
         mCalcHisView.setLayoutManager((new LinearLayoutManager(getActivity())));
         return view;
     }

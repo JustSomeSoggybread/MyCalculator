@@ -134,7 +134,7 @@ public class CalculatorFragment extends Fragment {
 
         });
 
-/*
+
         mHistoryButton = (Button) v.findViewById(R.id.view_history_button);
         mHistoryButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -143,10 +143,6 @@ public class CalculatorFragment extends Fragment {
                 startActivity(intent);
             }
         });
-*/
-
-
-
 
 
     return v;
