@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import java.util.List;
+
 public class CalculatorFragment extends Fragment {
 
 
@@ -23,6 +25,7 @@ public class CalculatorFragment extends Fragment {
     private Button mMultiplyButton;
     private Button mDivideButton;
     private Button mHistoryButton;
+    private static CalcList calcList;
 
     private double total=0;
     int modifyThis = 0;
@@ -35,23 +38,32 @@ public class CalculatorFragment extends Fragment {
         //finds main sum display
         TextView sumTotal = (TextView) v.findViewById(R.id.sumText);
 
+        EditText mEditText = (EditText) v.findViewById(R.id.editText);
+
         //code for addition button
         mAddButton = (Button) v.findViewById(R.id.addition_button);
         mAddButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 //finds input text
-                EditText mEditText = v.findViewById(R.id.displayText);
-                String temporary = mEditText.getText().toString();
+                String temporary;
+                temporary = mEditText.getText().toString();
+                Double saveTotal = total;
                 //if input text is valid, add it to the sum
                 if (!"".equals(temporary)){
                     modifyThis=Integer.parseInt(temporary);
                     total += modifyThis;
+
+                    Calculation newCalc = new Calculation(saveTotal, "+", modifyThis, total);
+
+                    calcList = CalcList.get(getActivity());
+                    calcList.addCalc(newCalc);
                 }
                 //else, return error
                 else{
                     displayToast("Error: Please enter a number", 0, 0);
                 }
+
                 //clean up
                 cleanUp(total, sumTotal);
             }
@@ -63,17 +75,24 @@ public class CalculatorFragment extends Fragment {
             @Override
             public void onClick(View v){
                 //finds input text
-                EditText mEditText = v.findViewById(R.id.displayText);
-                String temporary = mEditText.getText().toString();
+                String temporary;
+                temporary = mEditText.getText().toString();;
+                Double saveTotal = total;
                 //if input text is valid, add it to the sum
                 if (!"".equals(temporary)){
                     modifyThis=Integer.parseInt(temporary);
                     total -= modifyThis;
+
+                    Calculation newCalc = new Calculation(saveTotal, "-", modifyThis, total);
+
+                    calcList = CalcList.get(getActivity());
+                    calcList.addCalc(newCalc);
                 }
                 //else, return error
                 else{
                     displayToast("Error: Please enter a number", 0, 0);
                 }
+
                 //clean up
                 cleanUp(total, sumTotal);
             }
@@ -85,8 +104,9 @@ public class CalculatorFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //finds input text
-                EditText mEditText = v.findViewById(R.id.displayText);
-                String temporary = mEditText.getText().toString();
+                String temporary;
+                temporary = mEditText.getText().toString();
+                Double saveTotal = total;
                 //if input text is valid...
                 if (!"".equals(temporary)) {
                     modifyThis = Integer.parseInt(temporary);
@@ -97,6 +117,11 @@ public class CalculatorFragment extends Fragment {
                     //divide total by input
                     else {
                         total /= modifyThis;
+
+                        Calculation newCalc = new Calculation(saveTotal, "/", modifyThis, total);
+
+                        calcList = CalcList.get(getActivity());
+                        calcList.addCalc(newCalc);
                     }
                 }
 
@@ -117,17 +142,24 @@ public class CalculatorFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //find input
-                EditText mEditText = v.findViewById(R.id.displayText);
-                String temporary = mEditText.getText().toString();
+                String temporary;
+                temporary = mEditText.getText().toString();
+                Double saveTotal = total;
                 //if input is valid. multiply sum by it
                 if (!"".equals(temporary)) {
                     modifyThis = Integer.parseInt(temporary);
                     total *= modifyThis;
+
+                    Calculation newCalc = new Calculation(saveTotal, "x", modifyThis, total);
+
+                    calcList = CalcList.get(getActivity());
+                    calcList.addCalc(newCalc);
                 }
                 //else, return error
                 else{
                     displayToast("Error: Please enter a number", 0, 0);
                 }
+
                 //clean up
                 cleanUp(total, sumTotal);
             }
@@ -139,7 +171,7 @@ public class CalculatorFragment extends Fragment {
         mHistoryButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(v.getContext(), CalcListActivity.class);
+                Intent intent = CalculatorHistoryFragment.newIntent(v.getContext());
                 startActivity(intent);
             }
         });
@@ -164,8 +196,14 @@ public class CalculatorFragment extends Fragment {
         //sets modifythis to 0 (although this is ultimately unnecessary?)
         int modifyThis = 0;
         //sets edittext to be blank
-        EditText editText = (EditText) getView().findViewById(R.id.displayText);
+        EditText editText = (EditText) getView().findViewById(R.id.editText);
         editText.setText("");
+        calcList = CalcList.get(getActivity());
+        calcList.printCalcs();
+    }
+
+    public static List<Calculation> getCalcList(){
+        return calcList.getCalcs();
     }
 
 

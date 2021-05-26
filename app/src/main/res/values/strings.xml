@@ -4,8 +4,9 @@
     <string name="subtraction">-</string>
     <string name="multiplication">x</string>
     <string name="division">%</string>
-    <string name="total_number"> </string>
+    <string name="total_number">0</string>
 
     <string name="history_title">Calculation History</string>
     <string name="view_history_title">History</string>
+
 </resources>
