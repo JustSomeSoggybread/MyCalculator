@@ -27,6 +27,7 @@ public class CalculatorHistoryFragment extends Fragment{
     private RecyclerView mCalcHisView;
     private CalcAdapter mAdapter;
     private CalcList mCalcList;
+    private int mLastClick = -1;
     private static final String EXTRA_CALC_ID = "com.appdev.mycalculator.calc_id";
 
     public static Intent newIntent(Context packageContext){
@@ -39,15 +40,11 @@ public class CalculatorHistoryFragment extends Fragment{
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(false);
         mCalcList = CalcList.get(getActivity());
-        System.out.println("HistoryFragment");
-
-    }
+      }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.calculation_history, container, false);
-
-        System.out.println("onCreateView created");
 
         mCalcHisView = (RecyclerView) view.findViewById(R.id.calculation_recycler_view);
         mCalcHisView.setLayoutManager((new LinearLayoutManager(getActivity())));
@@ -72,7 +69,11 @@ public class CalculatorHistoryFragment extends Fragment{
             mCalcTitleText.setText(mCalc.getCalc());
             mCalcDateText.setText(DateFormat.getDateInstance().format(mCalc.getDate()));
         }
+
         public void onClick(View view){
+            Intent intent = CalculatorFragment.newIntent(getActivity(), mCalc.getTotal());
+            System.out.println("mCalc Total:" + mCalc.getTotal());
+            startActivity(intent);
         }
     }
 

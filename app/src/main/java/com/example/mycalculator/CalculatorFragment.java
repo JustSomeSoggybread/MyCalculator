@@ -1,5 +1,6 @@
 package com.example.mycalculator;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import java.util.List;
+import java.util.UUID;
 
 public class CalculatorFragment extends Fragment {
 
@@ -25,11 +27,21 @@ public class CalculatorFragment extends Fragment {
     private Button mMultiplyButton;
     private Button mDivideButton;
     private Button mHistoryButton;
+
+    private static String mCalcID;
     private static CalcList calcList;
 
-    private double total=0;
+    private static double total=0;
+    private static String saveTotal = "";
     int modifyThis = 0;
 
+    public static Intent newIntent(Context packageContext, double retTotal){
+        Intent intent = new Intent(packageContext, MainActivity.class);
+        intent.putExtra(saveTotal, Double.toString(retTotal));
+        System.out.println("Ret:" + retTotal);
+        saveTotal = Double.toString(retTotal);
+        return intent;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -39,6 +51,15 @@ public class CalculatorFragment extends Fragment {
         TextView sumTotal = (TextView) v.findViewById(R.id.sumText);
 
         EditText mEditText = (EditText) v.findViewById(R.id.editText);
+
+        System.out.println("saveTotal = " + saveTotal);
+
+        if (!"".equals(saveTotal)){
+            total = Double.parseDouble(saveTotal);
+            System.out.println("Moved savetotal");
+            saveTotal="";
+            sumTotal.setText(String.valueOf(total));
+        }
 
         //code for addition button
         mAddButton = (Button) v.findViewById(R.id.addition_button);

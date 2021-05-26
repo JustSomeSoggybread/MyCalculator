@@ -34,4 +34,6 @@ public class Calculation {
     public String getCalc(){
         return (mFirst + mMod + mSecond + "=" + mFinal);
     }
+
+    public double getTotal(){ return (mFinal);}
 }
