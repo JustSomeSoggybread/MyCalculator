@@ -26,28 +26,28 @@ public class CalculatorHistoryFragment extends Fragment{
 
     private RecyclerView mCalcHisView;
     private CalcAdapter mAdapter;
-    private CalcList mCalcList;
-    private int mLastClick = -1;
     private static final String EXTRA_CALC_ID = "com.appdev.mycalculator.calc_id";
 
+    //code to create a new intent
     public static Intent newIntent(Context packageContext){
         Intent intent = new Intent(packageContext, CalcListActivity.class);
         return intent;
     }
 
+    //on Create
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(false);
-        mCalcList = CalcList.get(getActivity());
       }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.calculation_history, container, false);
-
+        //finds and sets the recycler view
         mCalcHisView = (RecyclerView) view.findViewById(R.id.calculation_recycler_view);
         mCalcHisView.setLayoutManager((new LinearLayoutManager(getActivity())));
+        //calls update UI
         updateUI();
         return view;
     }
@@ -57,9 +57,12 @@ public class CalculatorHistoryFragment extends Fragment{
         private TextView mCalcTitleText;
         private TextView mCalcDateText;
 
+        //
         public CalcHolder(LayoutInflater inflater, ViewGroup parent){
             super(inflater.inflate(R.layout.calc_item_list, parent, false));
+            //sets an onclicklistener
             itemView.setOnClickListener(this);
+            //sets the text of the list items
             mCalcTitleText = (TextView) itemView.findViewById(R.id.calc_title);
             mCalcDateText = (TextView) itemView.findViewById(R.id.calc_date);
         }
@@ -69,10 +72,11 @@ public class CalculatorHistoryFragment extends Fragment{
             mCalcTitleText.setText(mCalc.getCalc());
             mCalcDateText.setText(DateFormat.getDateInstance().format(mCalc.getDate()));
         }
-
+        //lets you click on the history to set your current textview
         public void onClick(View view){
+            //sets an intent
             Intent intent = CalculatorFragment.newIntent(getActivity(), mCalc.getTotal());
-            System.out.println("mCalc Total:" + mCalc.getTotal());
+            //initiates intent
             startActivity(intent);
         }
     }
@@ -86,7 +90,7 @@ public class CalculatorHistoryFragment extends Fragment{
 
         @Override
         public CalcHolder onCreateViewHolder(ViewGroup parent, int viewType){
-            LayoutInflater layoutInflater =     LayoutInflater.from(getActivity());
+            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
 
             return new CalcHolder(layoutInflater, parent);
         }
@@ -108,8 +112,9 @@ public class CalculatorHistoryFragment extends Fragment{
         List<Calculation> calcs = getCalculations();
 
         if (mAdapter == null){
-            //PROBLEM: FIGURE OUT HOW TO COMMUNICATE WITH MAINACTIVITY SCACLIST AND THIS SCALCLIST BECAUSE THE TWO ARE NOT SHARED APPARENTLY.
+            //sets new adapter using the calcs list
             mAdapter = new CalcAdapter(calcs);
+            //sets calchisview to new adapter
             mCalcHisView.setAdapter(mAdapter);
         } else{
             mAdapter.notifyDataSetChanged();
@@ -118,6 +123,7 @@ public class CalculatorHistoryFragment extends Fragment{
 
     }
 
+    //fetches calculation list
     private List<Calculation> getCalculations(){
         CalcList calcList = CalcList.get(getActivity());
         return calcList.getCalcs();

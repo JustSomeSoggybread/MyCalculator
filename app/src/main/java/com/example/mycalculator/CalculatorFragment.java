@@ -35,10 +35,11 @@ public class CalculatorFragment extends Fragment {
     private static String saveTotal = "";
     int modifyThis = 0;
 
+    //This intent is for coming back from CHFragment - hence retTotal feeding into saveTotal, which
+    //ultimately feeds into total;
     public static Intent newIntent(Context packageContext, double retTotal){
         Intent intent = new Intent(packageContext, MainActivity.class);
         intent.putExtra(saveTotal, Double.toString(retTotal));
-        System.out.println("Ret:" + retTotal);
         saveTotal = Double.toString(retTotal);
         return intent;
     }
@@ -52,8 +53,8 @@ public class CalculatorFragment extends Fragment {
 
         EditText mEditText = (EditText) v.findViewById(R.id.editText);
 
-        System.out.println("saveTotal = " + saveTotal);
-
+        //for saveTotal (coming back from CHFragment). If there is something to return, set new
+        //total
         if (!"".equals(saveTotal)){
             total = Double.parseDouble(saveTotal);
             System.out.println("Moved savetotal");
@@ -74,7 +75,7 @@ public class CalculatorFragment extends Fragment {
                 if (!"".equals(temporary)){
                     modifyThis=Integer.parseInt(temporary);
                     total += modifyThis;
-
+                    //save this calculation to the calculation list
                     Calculation newCalc = new Calculation(saveTotal, "+", modifyThis, total);
 
                     calcList = CalcList.get(getActivity());
@@ -104,6 +105,7 @@ public class CalculatorFragment extends Fragment {
                     modifyThis=Integer.parseInt(temporary);
                     total -= modifyThis;
 
+                    //adds this calculation to the calc list
                     Calculation newCalc = new Calculation(saveTotal, "-", modifyThis, total);
 
                     calcList = CalcList.get(getActivity());
@@ -139,6 +141,7 @@ public class CalculatorFragment extends Fragment {
                     else {
                         total /= modifyThis;
 
+                        //adds this calculation to the calc list
                         Calculation newCalc = new Calculation(saveTotal, "/", modifyThis, total);
 
                         calcList = CalcList.get(getActivity());
@@ -171,6 +174,7 @@ public class CalculatorFragment extends Fragment {
                     modifyThis = Integer.parseInt(temporary);
                     total *= modifyThis;
 
+                    //adds this calculation to the calc list
                     Calculation newCalc = new Calculation(saveTotal, "x", modifyThis, total);
 
                     calcList = CalcList.get(getActivity());
@@ -192,6 +196,7 @@ public class CalculatorFragment extends Fragment {
         mHistoryButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                //creates a new CHF intent when the History button is clicked.
                 Intent intent = CalculatorHistoryFragment.newIntent(v.getContext());
                 startActivity(intent);
             }
@@ -219,14 +224,7 @@ public class CalculatorFragment extends Fragment {
         //sets edittext to be blank
         EditText editText = (EditText) getView().findViewById(R.id.editText);
         editText.setText("");
-        calcList = CalcList.get(getActivity());
-        calcList.printCalcs();
     }
-
-    public static List<Calculation> getCalcList(){
-        return calcList.getCalcs();
-    }
-
 
 }
 
