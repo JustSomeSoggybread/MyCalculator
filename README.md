@@ -13,5 +13,5 @@ Basically, basic.
 **3. RecyclerView:**
 	A RecyclerView will be required for the purpose of holding a history of past calculations.
 	
-**4. Accessing External Resources:**
-	Some button symbols necessary will not be available intrinsically, and so must be added from an external library.
+**4. Fragment utilization:**
+	This program will make use of Fragments in order to ensure an easily parseable interface.
