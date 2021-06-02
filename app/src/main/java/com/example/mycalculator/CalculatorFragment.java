@@ -28,7 +28,6 @@ public class CalculatorFragment extends Fragment {
     private Button mDivideButton;
     private Button mHistoryButton;
 
-    private static String mCalcID;
     private static CalcList calcList;
 
     private static double total=0;

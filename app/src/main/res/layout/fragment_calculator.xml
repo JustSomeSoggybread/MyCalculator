@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".CalculatorFragment">
+    tools:context=".CalculatorFragment"
+    android:background="@color/black">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="" />
+            android:text=""
+            android:textColor="@color/white"/>
 
         <Button
             android:id="@+id/view_history_button"
@@ -33,13 +35,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        >
 
         <TextView
             android:id="@+id/sumText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/total_number"
+            android:textColor="@color/white"
             android:gravity="center"
             />
 
@@ -49,7 +53,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textColor="@color/white"
             android:inputType = "numberDecimal"
+            android:text="--"
             />
 
 
@@ -62,7 +68,8 @@
                 android:id="@+id/addition_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/addition" />
+                android:text="@string/addition"
+                />
 
             <Button
                 android:id="@+id/subtraction_button"
